@@ -27,7 +27,7 @@ while ($row = $stmt->fetch()) {
 	}
 }
 
-$sql = "select count(att_id) as num from attendee group by type;";
+$sql = "select count(name) as num from company group by level;";
 $stmt = $pdo->prepare($sql);   #create the query
 $stmt->execute([]);   #bind the parameters
 
@@ -80,19 +80,28 @@ while ($row = $stmt->fetch()) {
 								
 								<h2>Attendee Fees</h2>
 								<div style="margin-left: 25px;">
-									<p>Student: <?php echo $student;?></p>
-									<p>Professional: <?php echo $professional;?></p>
+									<p>Student: $<?php echo $student;?></p>
+									<p>Professional: $<?php echo $professional;?></p>
+								</div>
+								<div style="margin-left: 50px;">
+								<p>Sub-Total: $<?php echo ($student + $professional);?></p>
 								</div>
 								<br>
 								<h2>Sponsors</h2>
 								<div style="margin-left: 25px;">
-									<p>Bronze: <?php echo $bronze;?></p>
-									<p>Silver: <?php echo $silver;?></p>
-									<p>Gold: <?php echo $gold;?></p>
-									<p>Platinum: <?php echo $platinum;?></p>
+									<p>Bronze: $<?php echo $bronze;?></p>
+									<p>Silver: $<?php echo $silver;?></p>
+									<p>Gold: $<?php echo $gold;?></p>
+									<p>Platinum: $<?php echo $platinum;?></p>
+								</div>
+								<div style="margin-left: 50px;">
+									<p>Sub-Total: $<?php echo ($bronze + $silver + $gold + $platinum);?></p>
 								</div>
 									
-
+								<h2>Totals</h2>
+								<div style="margin-left: 25px;">
+									<p>Overall: $<?php echo ($student + $professional + $bronze + $silver + $gold + $platinum);?></p>
+								</div>	
 							</section>
 
 					</div>
