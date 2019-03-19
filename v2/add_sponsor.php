@@ -4,6 +4,43 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
+
+<?php
+	$error = false;
+
+	if(isset($_POST['comp_name']))
+		$comp_name = $_POST['comp_name'];
+
+	if(isset($_POST['type']))
+		$type = $_POST['type'];
+
+	if(isset($comp_name) && isset($type)) {
+		if($type==0){
+			$max_emails = 0;
+		}
+		if($type==1) {
+			$max_emails = 3;
+		}
+		if($type==2) {
+			$max_emails = 4;
+		}
+		if($type==3) {
+			$max_emails = 5;
+		}
+		$pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
+
+		$sql = "INSERT INTO company (name, level, emails_sent, max_emails) VALUES (?, ?, ?, ?);";
+		$stmt = $pdo->prepare($sql);   #create the query
+		$stmt->execute([$comp_name, $type, 0, $max_emails]);   #bind the parameters
+
+		$error = ($stmt != true);
+	}else{
+		$error = true;
+	}
+	
+	
+?>
+
 <html>
 	<head>
 		<title>CMPE 332 Project</title>
@@ -34,12 +71,22 @@
 
 						<!-- Content -->
 							<section id="content" class="main">
-								<span class="image main"><img src="images/pic04.jpg" alt="" /></span>
-								<h2>Magna feugiat lorem</h2>
-								<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis fames ac ante ipsum primis in faucibus.</p>
-								<p>Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Consequat leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit enim turpis lorem ipsum dolor sit amet feugiat. Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet est velit quis lorem.</p>
-								<h2>Tempus veroeros</h2>
-								<p>Cep risus aliquam gravida cep ut lacus amet. Adipiscing faucibus nunc placerat. Tempus adipiscing turpis non blandit accumsan eget lacinia nunc integer interdum amet aliquam ut orci non col ut ut praesent. Semper amet interdum mi. Phasellus enim laoreet ac ac commodo faucibus faucibus. Curae ante vestibulum ante. Blandit. Ante accumsan nisi eu placerat gravida placerat adipiscing in risus fusce vitae ac mi accumsan nunc in accumsan tempor blandit aliquet aliquet lobortis. Ultricies blandit lobortis praesent turpis. Adipiscing accumsan adipiscing adipiscing ac lacinia cep. Orci blandit a iaculis adipiscing ac. Vivamus ornare laoreet odio vis praesent nunc lorem mi. Erat. Tempus sem faucibus ac id. Vis in blandit. Nascetur ultricies blandit ac. Arcu aliquam. Accumsan mi eget adipiscing nulla. Non vestibulum ac interdum condimentum semper commodo massa arcu.</p>
+							<?php
+									if($error){
+										echo "<p>Error adding new sponsor! Please check your input.</p>";
+									}
+								?>
+								<form method ="post">
+									Company Name: <input type="text" name="comp_name" required>
+									Sponsorship Level:
+									<select name="type" requried>
+										<option value="0">Bronze</option>
+										<option value="1">Silver</option>
+										<option value="2">Gold</option>
+										<option value="3">Platinum</option>
+									</select>
+									<input type="submit" value="Add Sponsor">
+								</form>
 							</section>
 
 					</div>
