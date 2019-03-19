@@ -1,0 +1,11 @@
+body{
+	background: salmon;
+}
+
+h1 {
+	color: lime;
+	border-color: cyan;
+	border-width: 10px;
+	border-style: dotted dashed ridge inset;
+	text-align: center;
+}
