@@ -30,7 +30,7 @@
 
 		$sql = "INSERT INTO attendee (name_first, name_last, birthdate, phonenumber, email, type) VALUES (?, ?, ?, ?, ?, ?);";
 		$stmt = $pdo->prepare($sql);   #create the query
-		$stmt->execute([$fname, $lname, $bdate, $phone, $email]);   #bind the parameters
+		$stmt->execute([$fname, $lname, $bdate, $phone, $email, $type]);   #bind the parameters
 
 		$error = ($stmt != true);
 	}else{
