@@ -15,7 +15,7 @@ $platinum = 10000;
 
 $pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
 
-$sql = "select count(att_id) as num from attendee group by type;";
+$sql = "select type, count(att_id) as num from attendee group by type;";
 $stmt = $pdo->prepare($sql);   #create the query
 $stmt->execute([]);   #bind the parameters
 
@@ -27,18 +27,18 @@ while ($row = $stmt->fetch()) {
 	}
 }
 
-$sql = "select count(name) as num from company group by level;";
+$sql = "select level, count(name) as num from company group by level;";
 $stmt = $pdo->prepare($sql);   #create the query
 $stmt->execute([]);   #bind the parameters
 
 while ($row = $stmt->fetch()) {
-	if($row['type'] == 0){
+	if($row['level'] == 0){
 		$bronze = $bronze*$row['num'];
-	}else if($row['type'] == 1){
+	}else if($row['level'] == 1){
 		$silver = $silver*$row['num'];
-	}else if($row['type'] == 2){
+	}else if($row['level'] == 2){
 		$gold = $gold*$row['num'];
-	}else if($row['type'] == 3){
+	}else if($row['level'] == 3){
 		$platinum = $platinum*$row['num'];
 	}
 }
@@ -64,7 +64,7 @@ while ($row = $stmt->fetch()) {
 						<h1>CMPE 332 Final Project</h1>
 						<div>
 							<a class="icon alt fa-home" href="index.html"></a>
-							<p>Attendee List</p>
+							<p>Financial Info</p>
 						</div>
 
 					</header>
@@ -74,9 +74,8 @@ while ($row = $stmt->fetch()) {
 
 						<!-- Content -->
 							<section id="content" class="main">
-								<span class="image main"><img src="images/pic04.jpg" alt="" /></span>
 								<h2>Conference Spreadsheet</h2>
-								<p>Here, you can see which sponsor donated how much money.</p>
+								
 								
 								<h2>Attendee Fees</h2>
 								<div style="margin-left: 25px;">
