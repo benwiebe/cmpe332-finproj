@@ -40,16 +40,18 @@
 							<section id="content" class="main">
 								<h2>Students</h2>
 								<table>
-									<tr><th>Name</th><th>Birthdate</th><th>Phone</th><th>Email</th></tr>
+									<tr><th>Name</th><th>Birthdate</th><th>Phone</th><th>Email</th><th>School</th><th>Room</th></tr>
 									<?php
-										$sql = "select * from attendee where type = 0";
+										$sql = "select * from attendee
+												natural join student
+												where type = 0";
 										$stmt = $pdo->prepare($sql);   #create the query
 										$stmt->execute([]);   #bind the parameters
 
 										#stmt contains the result of the program execution
 										#use fetch to get results row by row.
 										while ($row = $stmt->fetch()) {
-											echo "<tr><td>".$row["name_first"]." ".$row["name_last"]."</td><td>".$row["birthdate"]."</td><td>".$row["phonenumber"]."</td><td>".$row["email"]."</td></tr>";
+											echo "<tr><td>".$row["name_first"]." ".$row["name_last"]."</td><td>".$row["birthdate"]."</td><td>".$row["phonenumber"]."</td><td>".$row["email"]."</td><td>".$row["school"]."</td><td>".$row["room_id"]."</td></tr>";
 										}
 									?>
 								</table>
@@ -72,16 +74,18 @@
 
 								<h2>Sponsors</h2>
 								<table>
-									<tr><th>Name</th><th>Birthdate</th><th>Phone</th><th>Email</th></tr>
+									<tr><th>Name</th><th>Birthdate</th><th>Phone</th><th>Email</th><th>Company</th></tr>
 									<?php
-										$sql = "select * from attendee where type = 1";
+										$sql = "select * from attendee
+												natural join sponsor
+												where type = 1";
 										$stmt = $pdo->prepare($sql);   #create the query
 										$stmt->execute([]);   #bind the parameters
 
 										#stmt contains the result of the program execution
 										#use fetch to get results row by row.
 										while ($row = $stmt->fetch()) {
-											echo "<tr><td>".$row["name_first"]." ".$row["name_last"]."</td><td>".$row["birthdate"]."</td><td>".$row["phonenumber"]."</td><td>".$row["email"]."</td></tr>";
+											echo "<tr><td>".$row["name_first"]." ".$row["name_last"]."</td><td>".$row["birthdate"]."</td><td>".$row["phonenumber"]."</td><td>".$row["email"]."</td><td>".$row["company"]."</td></tr>";
 										}
 									?>
 								</table>
