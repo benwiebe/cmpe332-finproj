@@ -4,6 +4,11 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
+<?php
+$pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
+
+?>
+
 <html>
 	<head>
 		<title>CMPE 332 Project</title>
@@ -34,12 +39,42 @@
 
 						<!-- Content -->
 							<section id="content" class="main">
-								<span class="image main"><img src="images/pic04.jpg" alt="" /></span>
-								<h2>Magna feugiat lorem</h2>
-								<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis fames ac ante ipsum primis in faucibus.</p>
-								<p>Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Consequat leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit enim turpis lorem ipsum dolor sit amet feugiat. Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet est velit quis lorem.</p>
-								<h2>Tempus veroeros</h2>
-								<p>Cep risus aliquam gravida cep ut lacus amet. Adipiscing faucibus nunc placerat. Tempus adipiscing turpis non blandit accumsan eget lacinia nunc integer interdum amet aliquam ut orci non col ut ut praesent. Semper amet interdum mi. Phasellus enim laoreet ac ac commodo faucibus faucibus. Curae ante vestibulum ante. Blandit. Ante accumsan nisi eu placerat gravida placerat adipiscing in risus fusce vitae ac mi accumsan nunc in accumsan tempor blandit aliquet aliquet lobortis. Ultricies blandit lobortis praesent turpis. Adipiscing accumsan adipiscing adipiscing ac lacinia cep. Orci blandit a iaculis adipiscing ac. Vivamus ornare laoreet odio vis praesent nunc lorem mi. Erat. Tempus sem faucibus ac id. Vis in blandit. Nascetur ultricies blandit ac. Arcu aliquam. Accumsan mi eget adipiscing nulla. Non vestibulum ac interdum condimentum semper commodo massa arcu.</p>
+								<form method="post">
+									<legend>Select an Organization</legend>
+									<select name="committee">
+										<?php
+											$sql = "select name from committee";
+											$stmt = $pdo->prepare($sql);   #create the query
+											$stmt->execute([]);   #bind the parameters
+
+											#stmt contains the result of the program execution
+											#use fetch to get results row by row.
+											while ($row = $stmt->fetch()) {
+												echo "<option value='".$row['name']."'>".$row['name']."</option>";
+											}
+
+										?>
+									</select>
+									<input type="submit" value="Select Committee">
+								</form>
+								<br>
+
+								<h2>Committee Members</h2>
+								<table>
+									<tr><th>First</th><th>Last</th><th>Birth Date</th></tr><tr><th>Phone</th></tr><tr><th>Email</th></tr>
+									<?php
+									if (isset($_POST['commmittee'])){
+										$day = $_POST['committee'];
+
+										$sql = "select * from organizer join committee_members on organizer.org_id = committee_members.org_id where comm_name = '?'";
+										$stmt = $pdo->prepare($sql);   #create the query
+										$stmt->execute([$day]);   #bind the parameters
+										while ($row = $stmt->fetch()) {
+											echo "<tr><td>".$row["org_id"]." ".$row["name_first"]."</td><td>".$row["name_last"]."</td><td>".$row["birthdate"]."</td><td>".$row["phonenumber"]."</td><td>".$row["email"]."</td><td>";
+										}
+									}
+									?>
+								</table>
 							</section>
 
 					</div>
