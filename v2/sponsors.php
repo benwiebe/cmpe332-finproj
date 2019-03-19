@@ -48,7 +48,7 @@
 										#stmt contains the result of the program execution
 										#use fetch to get results row by row.
 										while ($row = $stmt->fetch()) {
-											echo "<tr><td>".$row["name"]."</td></tr>";
+											echo "<tr><td>".$row["name"]."</td><td><a href='del_sponsor.php?name=".$row["name"]."' class='button special small'>Delete</a></td></tr>";
 										}
 									?>
 								</table>
@@ -64,7 +64,7 @@
 										#stmt contains the result of the program execution
 										#use fetch to get results row by row.
 										while ($row = $stmt->fetch()) {
-											echo "<tr><td>".$row["name"]."</td></tr>";
+											echo "<tr><td>".$row["name"]."</td><td><a href='del_sponsor.php?name=".$row["name"]."' class='button special small'>Delete</a></td></tr>";
 										}
 									?>
 								</table>
@@ -79,7 +79,7 @@
 										#stmt contains the result of the program execution
 										#use fetch to get results row by row.
 										while ($row = $stmt->fetch()) {
-											echo "<tr><td>".$row["name"]."</td></tr>";
+											echo "<tr><td>".$row["name"]."</td><td><a href='del_sponsor.php?name=".$row["name"]."' class='button special small'>Delete</a></td></tr>";
 										}
 									?>
 								</table>
@@ -94,7 +94,7 @@
 										#stmt contains the result of the program execution
 										#use fetch to get results row by row.
 										while ($row = $stmt->fetch()) {
-											echo "<tr><td>".$row["name"]."</td></tr>";
+											echo "<tr><td>".$row["name"]."</td><td><a href='del_sponsor.php?name=".$row["name"]."' class='button special small'>Delete</a></td></tr>";
 										}
 									?>
 								</table>
