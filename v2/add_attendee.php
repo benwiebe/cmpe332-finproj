@@ -6,6 +6,7 @@
 -->
 <?php
 	$error = false;
+	$pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
 
 	if(isset($_POST['first']))
 		$fname = $_POST['first'];
@@ -25,16 +26,56 @@
 	if(isset($_POST['type']))
 		$type = $_POST['type'];
 
-	if(isset($fname) && isset($lname) && isset($bdate) && isset($phone) && isset($email) && isset($type)) {
-		$pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
+	if(isset($_POST['company']))
+		$company = $_POST['company'];
 
-		$sql = "INSERT INTO attendee (name_first, name_last, birthdate, phonenumber, email, type) VALUES (?, ?, ?, ?, ?, ?);";
-		$stmt = $pdo->prepare($sql);   #create the query
-		$stmt->execute([$fname, $lname, $bdate, $phone, $email, $type]);   #bind the parameters
+	if(isset($_POST['school']))
+		$school = $_POST['school'];
+
+	if(isset($fname) && isset($lname) && isset($bdate) && isset($phone) && isset($email) && isset($type)) {
+
+		if(($type == 0 && !isset($school)) || ($type == 1 && !isset($company)))
+			$error = true;
+		else{
+			$sql = "INSERT INTO attendee (name_first, name_last, birthdate, phonenumber, email, type) VALUES (?, ?, ?, ?, ?, ?);";
+			$stmt = $pdo->prepare($sql);   #create the query
+			$stmt->execute([$fname, $lname, $bdate, $phone, $email, $type]);   #bind the parameters
+
+			$error = ($stmt != true);
+
+			// Get last ID (ie. the one we just added)
+			$sql = "select max(att_id) as id from attendee";
+			$stmt = $pdo->prepare($sql);   #create the query
+			$stmt->execute([$type]);   #bind the parameters
+			$id = ($stmt->fetch())['id'];
+
+
+			if($type == 0 && !$error) { //student
+				// pick a room to assign
+				$sql = "SELECT room_num FROM `hotel_room` 
+						LEFT JOIN (
+    						SELECT room_id, count(att_id) as cur from student group by room_id
+    					) as X
+						ON X.room_id = hotel_room.room_num and X.cur < 2*hotel_room.num_beds;";
+				$stmt = $pdo->prepare($sql);   #create the query
+				$stmt->execute([$type]);   #bind the parameters
+				$room = ($stmt->fetch())['room_num']; //just pick the first available room
+
+				$sql = "INSERT INTO student (att_id, room_id, school) VALUES (?, ?, ?);";
+				$stmt = $pdo->prepare($sql);   #create the query
+				$stmt->execute([$id, $room, $school]);   #bind the parameters
+
+				$error = ($stmt != true);
+
+			} else if($type == 1 && !$error) { //sponsor
+				$sql = "INSERT INTO sponsor (att_id, company) VALUES (?, ?);";
+				$stmt = $pdo->prepare($sql);   #create the query
+				$stmt->execute([$id, $company]);   #bind the parameters
+				$error = ($stmt != true);
+			}
+		}
 
 		$error = ($stmt != true);
-	}else{
-		$error = true;
 	}
 	
 	
@@ -82,11 +123,34 @@
 									Phone Number: <input type="tel" name="phone" required>
 									Email: <input type="email" name="email" required>
 									Attendee Type:
-									<select name="type" requried>
+									<select id="typeselect" name="type" requried>
 										<option value="0">Student</option>
 										<option value="1">Sponsor</option>
 										<option value="2">Professional</option>
 									</select>
+
+									<div id="student_form">
+										School Name: <input type="text" name="school">
+									</div>
+									<div id="sponsor_form">
+										Company Name:
+										<select name="company">
+											<?php
+												$sql = "select name from company";
+												$stmt = $pdo->prepare($sql);   #create the query
+												$stmt->execute([]);   #bind the parameters
+
+												#stmt contains the result of the program execution
+												#use fetch to get results row by row.
+												while ($row = $stmt->fetch()) {
+													echo "<option value='".$row['name']."'>".$row['name']."</option>";
+												}
+
+											?>
+										</select>
+									</div>
+
+
 									<input type="submit" value="Add Attendee">
 								</form>
 							</section>
@@ -133,6 +197,29 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
+
+			<script>
+				function update_section() {
+					if($('#typeselect').val() == 0) {
+						$('#student_form').show();
+						$('#sponsor_form').hide();
+					}else if($('#typeselect').val() == 1) {
+						$('#student_form').hide();
+						$('#sponsor_form').show();
+					}else{
+						$('#student_form').hide();
+						$('#sponsor_form').hide();
+					}
+				}
+
+				$('#typeselect').on('change', function() {
+				  update_section()
+				});
+
+				$(document).on('ready', function() {
+					update_section();
+				})
+			</script>
 
 	</body>
 </html>
