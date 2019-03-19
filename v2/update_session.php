@@ -4,6 +4,34 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
+
+<?php
+	$pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
+
+	if(isset($_GET['name']))
+		$name = $_GET['name'];
+
+	if(isset($_GET['start']))
+		$start = $_GET['start'];
+
+	if(isset($_GET['end']))
+		$end = $_GET['end'];
+
+	if(isset($_GET['room']))
+		$room = $_GET['room'];
+
+	if(isset($_GET['day']))
+		$day = $_GET['day'];
+
+	if(isset($_GET['id']))
+		$id = $_GET['id'];
+
+	if(!(isset($name) && isset($start) && isset($day) && isset($end) && isset($room)))
+		die("it's bad");
+	
+	
+?>
+
 <html>
 	<head>
 		<title>CMPE 332 Project</title>
@@ -24,7 +52,7 @@
 						<h1>CMPE 332 Final Project</h1>
 						<div>
 							<a class="icon alt fa-home" href="index.html"></a>
-							<p>Attendee List</p>
+							<p>Update Session</p>
 						</div>
 
 					</header>
@@ -34,43 +62,20 @@
 
 						<!-- Content -->
 							<section id="content" class="main">
-								<span class="image main"><img src="images/pic04.jpg" alt="" /></span>
-								<h2>Schedule</h2>
-								<p>Hello, here you will find today's schedule.</p>
-								<form method="post">
-									<legend>Select a day</legend>
-									<select name="day" required>
-										<option value = "1">Day 1</option>
-										<option value = "2">Day 2</option>
+								<form method ="post" action="update_session_handler.php">
+									<input name="id" type="hidden" value=<?php echo "'".$id."'" ?>>
+									Session Name: <input type="text" name="name" required value=<?php echo "'".$name."'" ?>>
+									Start Time:   <input type="text" name="start_time" pattern="([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])" required value=<?php echo "'".$start."'" ?>>
+									End Time:     <input type="text" name="end_time" pattern="([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])" required value=<?php echo "'".$end."'" ?>>
+									Room Number:  <input name="room" type="text" required value=<?php echo "'".$room."'" ?>>
+									Day:          <select name="day" selected=<?php echo "'".$day."'" ?>>
+										<option value="1" <?php if($day == 1) echo "selected";?>>1</option>
+										<option value="2" <?php if($day == 2) echo "selected";?>>2</option>
 									</select>
-									<input type="submit" value="Change Day">
+									<input type="submit" value="Update Session">
 								</form>
-								<br>
-
-								<h2>Schedule</h2>
-								<table>
-									<tr><th>Time</th><th>Room</th><th>Session Name</th></tr>
-									<?php
-									if (isset($_POST['day'])){
-										$day = $_POST['day'];
-
-										$pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
-
-										$sql = "select * from session where day = ?";
-										$stmt = $pdo->prepare($sql);   #create the query
-										$stmt->execute([$day]);   #bind the parameters
-										while ($row = $stmt->fetch()) {
-											echo "<tr><td>".$row["time_start"]." -> ".$row["time_end"]."</td><td>".$row["room_num"]."</td><td>".$row["name"]."</td><td><a href='update_session.php?start=".$row["time_start"]."&room=".$row['room_num']."&day=".$row['day']."&end=".$row['time_end']."&name=".$row['name']."&id=".$row['sess_id']."' class='button special small'>Edit</a></td><td>";
-										}
-									}
 
 
-
-
-									?>
-
-								</table>
-								
 							</section>
 
 					</div>
