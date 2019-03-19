@@ -29,7 +29,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
 						<h1>CMPE 332 Final Project</h1>
 						<div>
 							<a class="icon alt fa-home" href="index.html"></a>
-							<p>Attendee List</p>
+							<p>Committee Members</p>
 						</div>
 
 					</header>
@@ -61,16 +61,17 @@ $pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
 
 								<h2>Committee Members</h2>
 								<table>
-									<tr><th>First</th><th>Last</th><th>Birth Date</th></tr><tr><th>Phone</th></tr><tr><th>Email</th></tr>
+									<tr><th>Name</th><th>Birthdate</th><th>Phone</th><th>Email</th></tr>
 									<?php
-									if (isset($_POST['commmittee'])){
-										$day = $_POST['committee'];
+									if (isset($_POST['committee'])){
+										$committee = $_POST['committee'];
 
-										$sql = "select * from organizer join committee_members on organizer.org_id = committee_members.org_id where comm_name = '?'";
+										$sql = "select * from organizer join committee_members on organizer.org_id = committee_members.org_id where comm_name=?";
 										$stmt = $pdo->prepare($sql);   #create the query
-										$stmt->execute([$day]);   #bind the parameters
+										$stmt->execute([$committee]);   #bind the parameters
+
 										while ($row = $stmt->fetch()) {
-											echo "<tr><td>".$row["org_id"]." ".$row["name_first"]."</td><td>".$row["name_last"]."</td><td>".$row["birthdate"]."</td><td>".$row["phonenumber"]."</td><td>".$row["email"]."</td><td>";
+											echo "<tr><td>".$row["name_first"]." ".$row["name_last"]."</td><td>".$row["birthdate"]."</td><td>".$row["phonenumber"]."</td><td>".$row["email"]."</td></tr>";
 										}
 									}
 									?>
