@@ -29,7 +29,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
 						<h1>CMPE 332 Final Project</h1>
 						<div>
 							<a class="icon alt fa-home" href="index.html"></a>
-							<p>Attendee List</p>
+							<p>Posted Jobs</p>
 						</div>
 
 					</header>

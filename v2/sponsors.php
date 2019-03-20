@@ -27,7 +27,7 @@
 						<h1>CMPE 332 Final Project</h1>
 						<div>
 							<a class="icon alt fa-home" href="index.html"></a>
-							<p>Attendee List</p>
+							<p>Sponsors</p>
 						</div>
 
 					</header>
