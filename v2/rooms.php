@@ -84,32 +84,30 @@ $pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
 
 				<!-- Footer -->
 					<footer id="footer">
-						<section>
-							<h2>Aliquam sed mauris</h2>
-							<p>Sed lorem ipsum dolor sit amet et nullam consequat feugiat consequat magna adipiscing tempus etiam dolore veroeros. eget dapibus mauris. Cras aliquet, nisl ut viverra sollicitudin, ligula erat egestas velit, vitae tincidunt odio.</p>
+					<section>
+							<h2>Want to go to another page?</h2>
+							<p>Howdy! If you like 404 errors and want to see one, feel free to click the button below.</p>
 							<ul class="actions">
-								<li><a href="#" class="button">Learn More</a></li>
+								<li><a href="generic.html" class="button">CLICK ME!</a></li>
 							</ul>
 						</section>
 						<section>
-							<h2>Etiam feugiat</h2>
+							<h2>Contact Information</h2>
 							<dl class="alt">
 								<dt>Address</dt>
-								<dd>1234 Somewhere Road &bull; Nashville, TN 00000 &bull; USA</dd>
-								<dt>Phone</dt>
-								<dd>(000) 000-0000 x 0000</dd>
+								<dd>45 Union Street &bull; Kingston, ON K7L 3N6 &bull; Canada</dd>
 								<dt>Email</dt>
-								<dd><a href="#">information@untitled.tld</a></dd>
+								<dd><a href="#">bestgroup@cmpe332.biz</a></dd>
 							</dl>
-							<ul class="icons">
+							<!--<ul class="icons">
 								<li><a href="#" class="icon fa-twitter alt"><span class="label">Twitter</span></a></li>
 								<li><a href="#" class="icon fa-facebook alt"><span class="label">Facebook</span></a></li>
 								<li><a href="#" class="icon fa-instagram alt"><span class="label">Instagram</span></a></li>
 								<li><a href="#" class="icon fa-github alt"><span class="label">GitHub</span></a></li>
 								<li><a href="#" class="icon fa-dribbble alt"><span class="label">Dribbble</span></a></li>
-							</ul>
+							</ul>-->
 						</section>
-						<p class="copyright">&copy; Untitled.</p>
+						<p class="copyright">&copy; CMPE332 Group 24</p>
 					</footer>
 
 			</div>
