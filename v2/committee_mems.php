@@ -107,13 +107,13 @@ $pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
 								<dt>Email</dt>
 								<dd><a href="#">bestgroup@cmpe332.biz</a></dd>
 							</dl>
-							<!--<ul class="icons">
-								<li><a href="#" class="icon fa-twitter alt"><span class="label">Twitter</span></a></li>
+							<ul class="icons">
+								<!--<li><a href="#" class="icon fa-twitter alt"><span class="label">Twitter</span></a></li>
 								<li><a href="#" class="icon fa-facebook alt"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon fa-instagram alt"><span class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon fa-github alt"><span class="label">GitHub</span></a></li>
-								<li><a href="#" class="icon fa-dribbble alt"><span class="label">Dribbble</span></a></li>
-							</ul>-->
+								<li><a href="#" class="icon fa-instagram alt"><span class="label">Instagram</span></a></li>-->
+								<li><a href="https://github.com/benwiebe/cmpe332-finproj" class="icon fa-github alt"><span class="label">GitHub</span></a></li>
+								<!--<li><a href="#" class="icon fa-dribbble alt"><span class="label">Dribbble</span></a></li>-->
+							</ul>
 						</section>
 						<p class="copyright">&copy; CMPE332 Group 24</p>
 					</footer>
