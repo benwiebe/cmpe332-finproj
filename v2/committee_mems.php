@@ -61,7 +61,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
 
 								<h2>Committee Members</h2>
 								<table>
-									<tr><th>Name</th><th>Birthdate</th><th>Phone</th><th>Email</th></tr>
+									<tr><th></th><th>Name</th><th>Birthdate</th><th>Phone</th><th>Email</th></tr>
 									<?php
 									if (isset($_POST['committee'])){
 										$committee = $_POST['committee'];
@@ -70,8 +70,18 @@ $pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
 										$stmt = $pdo->prepare($sql);   #create the query
 										$stmt->execute([$committee]);   #bind the parameters
 
+										$sql2 = "select chair from committee where name=?";
+										$stmt2 = $pdo->prepare($sql2);   #create the query
+										$stmt2->execute([$committee]);   #bind the parameters
+										$row2 = $stmt2->fetch();
+
 										while ($row = $stmt->fetch()) {
-											echo "<tr><td>".$row["name_first"]." ".$row["name_last"]."</td><td>".$row["birthdate"]."</td><td>".$row["phonenumber"]."</td><td>".$row["email"]."</td></tr>";
+											echo "<tr><td>";
+
+											if($row2["chair"] == $row["org_id"])
+												echo "<span class='icon fa-star'></span>";
+
+											echo"</td><td>".$row["name_first"]." ".$row["name_last"]."</td><td>".$row["birthdate"]."</td><td>".$row["phonenumber"]."</td><td>".$row["email"]."</td></tr>";
 										}
 									}
 									?>

@@ -34,7 +34,6 @@
 
 						<!-- Content -->
 							<section id="content" class="main">
-								<span class="image main"><img src="images/pic04.jpg" alt="" /></span>
 								<h2>Schedule</h2>
 								<p>Hello, here you will find today's schedule.</p>
 								<form method="post">

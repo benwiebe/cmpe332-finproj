@@ -64,8 +64,11 @@ $pdo = new PDO('mysql:host=localhost;dbname=project', "root", "");
 									<h2>Jobs Available<h2>
 									<tr><th>Title</th><th>Province</th><th>City</th><th>Payrate</th><th>Company</th></tr>
 										<?php
-											if(isset ($_POST['company']))
+											if(isset ($_POST['company'])){
 												$company = $_POST['company'];
+											}else{
+												$company = "all";
+											}
 											
 											$sql = "select * from posted_job";
 											if($company!="all")
