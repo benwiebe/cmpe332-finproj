@@ -71,11 +71,6 @@
 
 						<!-- Content -->
 							<section id="content" class="main">
-							<?php
-									if($error){
-										echo "<p>Error adding new sponsor! Please check your input.</p>";
-									}
-								?>
 								<form method ="post">
 									Company Name: <input type="text" name="comp_name" required>
 									Sponsorship Level:
